@@ -1,14 +1,17 @@
 import logo from './logo.svg';
 import './App.css';
 import GuessedWords from './GuessedWords';
+import Congrats from './Congrats';
 
 const words = [
-  
+  { guessedWord: 'train', letterMatchCount: 3 }
 ]
 
 function App() {
   return (
-    <div className="App">
+    <div className="container">
+    <h2>Jotto</h2>
+      <Congrats success={false} />
       <GuessedWords guessedWords={words}/>
     </div>
   );
