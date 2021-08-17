@@ -28,12 +28,31 @@ test('does not throw warning with expected props', () => {
 })
 
 describe('state controlled input field', () => {
+    let wrapper;
+    let originalUseState;
+
+  beforeEach(() => {
+    mockSetCurrentGuess.mockClear();
+    originalUseState = React.useState;
+    wrapper = setup();
+  })
+  afterEach(() => {
+    React.useState = originalUseState;
+  })
+
   test('state updates with value of input box upon change', () => {
-    const wrapper = setup();
     const inputBox = findByTestAttr(wrapper, 'input-box');
     const mockEvent = { target: { value: 'train'} };
   
     inputBox.simulate('change', mockEvent);
     expect(mockSetCurrentGuess).toHaveBeenCalledWith('train');
   })
+
+  test('state is called with an empty string when submit button is clicked', () => {
+    const button = findByTestAttr(wrapper, 'submit-button');
+    
+    button.simulate('click', { preventDefault() {} });
+    expect(mockSetCurrentGuess).toHaveBeenCalledWith('');
+  })
+
 })
