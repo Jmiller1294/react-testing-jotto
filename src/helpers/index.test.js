@@ -4,7 +4,7 @@ describe('getLetterMatchCount', () => {
   const secretWord = 'party';
   test('returns the correct count when there are no matching letters', () => {
     const letterMatchCount = getLetterMatchCount('hello', secretWord);
-    expect(getLetterMatchCount).toBe(0);
+    expect(letterMatchCount).toBe(0);
   })
   test('returns the correct count when there are three matching letters', () => {
     const letterMatchCount = getLetterMatchCount('train', secretWord);
