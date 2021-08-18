@@ -2,13 +2,17 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 
-const Input = ({ secretWord }) => {
+const Input = ({success, secretWord }) => {
   const [currentGuess, setCurrentGuess] = useState('');
 
   const handleSubmit = (event) => {
     setCurrentGuess("");
   }
   
+  if(success) {
+    return <div data-test='component-input' />
+  }
+
   return (
     <div data-test="component-input">
       <form className="form-inline">

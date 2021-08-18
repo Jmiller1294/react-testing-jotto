@@ -12,9 +12,8 @@ jest.mock('react', () => ({
   useState: (initialState) => [initialState, mockSetCurrentGuess]
 }))
 
-const setup = (props={}) => {
-  const setupProps = {...defaultProps, ...props};
-  return shallow(<Input { ...setupProps } />);
+const setup = (success=false, secretWord='party') => {
+  return shallow(<Input success={success} secretWord={secretWord} />);
 }
 
 describe('render', () => {
@@ -25,7 +24,6 @@ describe('render', () => {
     })
 
     test('Input component renders without error', () => {
-      const wrapper = setup();
       const inputComponent = findByTestAttr(wrapper, 'component-input');
       expect(inputComponent.length).toBe(1);
     })
@@ -40,10 +38,25 @@ describe('render', () => {
   })
 
   describe('success is false', () => {
-    
+    let wrapper;
+    beforeEach(() => {
+      wrapper = setup(false)
+    })
+
+    test('Input component renders without error', () => {
+      const inputComponent = findByTestAttr(wrapper, 'component-input');
+      expect(inputComponent.length).toBe(1);
+    })
+    test('input box does show', () => {
+      const inputBox = findByTestAttr(wrapper, 'input-box');
+      expect(inputBox.exists()).toBe(true);
+    })
+    test('submit does show', () => {
+      const submitButton = findByTestAttr(wrapper, 'submit-button');
+      expect(submitButton.exists()).toBe(true);
+    })
   })
 })
-
 
 
 test('does not throw warning with expected props', () => {
