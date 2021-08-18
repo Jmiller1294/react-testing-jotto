@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import { findByTestAttr, checkProps } from "../test/testUtils";
 import Input from "./Input";
 
-const defaultProps = { secretWord: 'hello'}
+const defaultProps = { success: false, secretWord: 'hello'}
 const mockSetCurrentGuess = jest.fn();
 
 jest.mock('react', () => ({
@@ -17,15 +17,39 @@ const setup = (props={}) => {
   return shallow(<Input { ...setupProps } />);
 }
 
-test('Input component renders without error', () => {
-  const wrapper = setup();
-  const inputComponent = findByTestAttr(wrapper, 'component-input');
-  expect(inputComponent.length).toBe(1);
+describe('render', () => {
+  describe('success is true', () => {
+    let wrapper;
+    beforeEach(() => {
+      wrapper = setup(true)
+    })
+
+    test('Input component renders without error', () => {
+      const wrapper = setup();
+      const inputComponent = findByTestAttr(wrapper, 'component-input');
+      expect(inputComponent.length).toBe(1);
+    })
+    test('input box does not show', () => {
+      const inputBox = findByTestAttr(wrapper, 'input-box');
+      expect(inputBox.exists()).toBe(false);
+    })
+    test('submit does not show', () => {
+      const submitButton = findByTestAttr(wrapper, 'submit-button');
+      expect(submitButton.exists()).toBe(false);
+    })
+  })
+
+  describe('success is false', () => {
+    
+  })
 })
+
+
 
 test('does not throw warning with expected props', () => {
   checkProps(Input, defaultProps);
 })
+
 
 describe('state controlled input field', () => {
     let wrapper;
@@ -54,5 +78,7 @@ describe('state controlled input field', () => {
     button.simulate('click', { preventDefault() {} });
     expect(mockSetCurrentGuess).toHaveBeenCalledWith('');
   })
-
 })
+
+
+
