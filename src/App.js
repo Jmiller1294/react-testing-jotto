@@ -9,7 +9,7 @@ const words = [
 
 function App() {
   return (
-    <div className="container">
+    <div data-test="component-app" className="container">
     <h2>Jotto</h2>
       <Congrats success={false} />
       <GuessedWords guessedWords={words}/>
