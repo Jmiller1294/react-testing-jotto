@@ -1,4 +1,5 @@
 import moxios from 'moxios';
+import { getSecretWord } from './'
 
 describe('getScretWord', () => {
   beforeEach(() => {
@@ -9,6 +10,17 @@ describe('getScretWord', () => {
   })
 
   test('secretWord is returned from the function', () => {
-    
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 200,
+        response: 'party'
+      })
+    })
+
+    return getSecretWord()
+      .then((secretWord) => {
+        expect(secretWord).toBe('party');
+      })
   })
 })
